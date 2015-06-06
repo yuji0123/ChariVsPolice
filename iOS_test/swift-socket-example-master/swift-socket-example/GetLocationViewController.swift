@@ -1,112 +1,66 @@
-//
-//  ViewController.swift
-//  CoreLocation001
-//
-
 import UIKit
 import CoreLocation
 
-class GetLocationViewController: UIViewController , CLLocationManagerDelegate{
+class GetLocationViewController: UIViewController, CLLocationManagerDelegate {
     
-    var myLocationManager:CLLocationManager!
-    
-    // 緯度表示用のラベル.
-    var myLatitudeLabel:UILabel!
-    
-    // 経度表示用のラベル.
-    var myLongitudeLabel:UILabel!
+    var locationManager = CLLocationManager()
+    var currentLocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
         
-        // ボタンの生成.
-        let myButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        myButton.backgroundColor = UIColor.orangeColor()
-        myButton.layer.masksToBounds = true
-        myButton.setTitle("Get", forState: .Normal)
-        myButton.layer.cornerRadius = 50.0
-        myButton.layer.position = CGPoint(x: self.view.bounds.width/2, y:self.view.bounds.height/2)
-        myButton.addTarget(self, action: "onClickMyButton:", forControlEvents: .TouchUpInside)
-        
-        // 緯度表示用のラベルを生成.
-        myLatitudeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 30))
-        myLatitudeLabel.layer.position = CGPoint(x: self.view.bounds.width/2, y:self.view.bounds.height/2+100)
-        
-        // 軽度表示用のラベルを生成.
-        myLongitudeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 30))
-        myLongitudeLabel.layer.position = CGPoint(x: self.view.bounds.width/2, y:self.view.bounds.height/2+130)
-        
-        
-        // 現在地の取得.
-        myLocationManager = CLLocationManager()
-        
-        myLocationManager.delegate = self
-        
-        // セキュリティ認証のステータスを取得.
-        let status = CLLocationManager.authorizationStatus()
-        
-        // まだ認証が得られていない場合は、認証ダイアログを表示.
-        if(status == CLAuthorizationStatus.NotDetermined) {
-            println("didChangeAuthorizationStatus:\(status)");
-            // まだ承認が得られていない場合は、認証ダイアログを表示.
-            self.myLocationManager.requestAlwaysAuthorization()
-        }
-        
-        // 取得精度の設定.
-        myLocationManager.desiredAccuracy = kCLLocationAccuracyBest
-        // 取得頻度の設定.
-        myLocationManager.distanceFilter = 100
-        
-        self.view.addSubview(myButton)
+        // locationManageの設定
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func startSearchLocation(sender: UIButton) {
+        
+        // 位置情報のアクセス許可の状況に応じて、アクセス許可の取得、位置情報取得の開始を行う
+        let status = CLLocationManager.authorizationStatus()
+        switch status{
+        case .Restricted, .Denied:
+            break
+        case .NotDetermined:
+            // iOS8ではアクセス許可のリクエストをする。iOS7では位置情報取得処理を開始することでアクセス許可のリクエストをする
+            if locationManager.respondsToSelector("requestWhenInUseAuthorization"){
+                locationManager.requestWhenInUseAuthorization()
+            }else{
+                locationManager.startUpdatingLocation()
+            }
+        case .AuthorizedWhenInUse, .AuthorizedAlways:
+            locationManager.startUpdatingLocation()
+        default:
+            break
+        }
+    }
+    
+    // 位置情報のアクセス許可の状況が変わったときの処理
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         
-        println("didChangeAuthorizationStatus");
-        
-        // 認証のステータスをログで表示.
-        var statusStr = "";
-        switch (status) {
-        case .NotDetermined:
-            statusStr = "NotDetermined"
-        case .Restricted:
-            statusStr = "Restricted"
-        case .Denied:
-            statusStr = "Denied"
-        case .AuthorizedAlways:
-            statusStr = "AuthorizedAlways"
-        case .AuthorizedWhenInUse:
-            statusStr = "AuthorizedWhenInUse"
+        switch status{
+        case .Restricted, .Denied:
+            manager.stopUpdatingLocation()
+        case .AuthorizedWhenInUse, .AuthorizedAlways:
+            locationManager.startUpdatingLocation()
+        default:
+            break
         }
-        println(" CLAuthorizationStatus: \(statusStr)")
     }
     
-    // ボタンイベントのセット.
-    func onClickMyButton(sender: UIButton){
-        // 現在位置の取得を開始.
-        myLocationManager.startUpdatingLocation()
-    }
-    
-    // 位置情報取得に成功したときに呼び出されるデリゲート.
-    func locationManager(manager: CLLocationManager!,didUpdateLocations locations: [AnyObject]!){
+    // 位置情報が取得できたときの処理
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
-        // 緯度・経度の表示.
-        myLatitudeLabel.text = "緯度：\(manager.location.coordinate.latitude)"
-        myLatitudeLabel.textAlignment = NSTextAlignment.Center
-        println("緯度：\(manager.location.coordinate.latitude)")
-        
-        myLongitudeLabel.text = "経度：\(manager.location.coordinate.longitude)"
-        myLongitudeLabel.textAlignment = NSTextAlignment.Center
-        println("経度：\(manager.location.coordinate.longitude)")
-        
-        self.view.addSubview(myLatitudeLabel)
-        self.view.addSubview(myLongitudeLabel)
+        if locations.count > 0{
+            currentLocation = locations.last as? CLLocation
+            NSLog("緯度:\(currentLocation?.coordinate.latitude) 経度:\(currentLocation?.coordinate.longitude)")
+        }
         
     }
-    
-    // 位置情報取得に失敗した時に呼び出されるデリゲート.
-    func locationManager(manager: CLLocationManager!,didFailWithError error: NSError!){
-        print("error")
-    }
-    
 }

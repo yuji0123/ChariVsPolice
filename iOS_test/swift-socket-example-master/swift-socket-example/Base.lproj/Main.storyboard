@@ -206,10 +206,10 @@
             </objects>
             <point key="canvasLocation" x="388" y="80"/>
         </scene>
-        <!--Get Locate View Controller-->
+        <!--Get Location View Controller-->
         <scene sceneID="1Vk-60-kOk">
             <objects>
-                <viewController id="GDv-OQ-cbt" customClass="GetLocateViewController" sceneMemberID="viewController">
+                <viewController id="GDv-OQ-cbt" customClass="GetLocationViewController" customModule="swift_socket_example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cn0-aV-uBG"/>
                         <viewControllerLayoutGuide type="bottom" id="ySN-xP-8S7"/>
@@ -224,6 +224,15 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hG-XZ-0bB">
+                                <rect key="frame" x="164" y="319" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="startSearchLocation:" destination="GDv-OQ-cbt" eventType="touchUpInside" id="3VN-Rr-1LJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
