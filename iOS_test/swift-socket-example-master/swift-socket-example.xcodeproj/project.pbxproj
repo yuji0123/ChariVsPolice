@@ -19,6 +19,7 @@
 		5244C39D1A4827B0000A0C43 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5244C39C1A4827B0000A0C43 /* MessageCell.swift */; };
 		5244C39F1A4828FB000A0C43 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5244C39E1A4828FB000A0C43 /* MessageModel.swift */; };
 		6BD4A0806E49005ADC267178 /* libPods-swift-socket-example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E05E6F7875B678312655F0B9 /* libPods-swift-socket-example.a */; };
+		D7AD25861B22FFB900445CF2 /* GetLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AD25851B22FFB900445CF2 /* GetLocationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		8DA3626A91371AE73AC028B9 /* Pods-swift-socket-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-swift-socket-example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-swift-socket-example/Pods-swift-socket-example.debug.xcconfig"; sourceTree = "<group>"; };
 		989B0079CFDD30029D13E14F /* Pods-swift-socket-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-swift-socket-example.release.xcconfig"; path = "Pods/Target Support Files/Pods-swift-socket-example/Pods-swift-socket-example.release.xcconfig"; sourceTree = "<group>"; };
 		9EE30E791ED65867B147DB4B /* libPods-swift-socket-exampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-swift-socket-exampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7AD25851B22FFB900445CF2 /* GetLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLocationViewController.swift; sourceTree = "<group>"; };
 		E05E6F7875B678312655F0B9 /* libPods-swift-socket-example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-swift-socket-example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -120,6 +122,7 @@
 				5244C37F1A47C059000A0C43 /* LaunchScreen.xib */,
 				5244C3741A47C059000A0C43 /* Supporting Files */,
 				5244C3961A47C11F000A0C43 /* swift-socket-example-Bridging-Header.h */,
+				D7AD25851B22FFB900445CF2 /* GetLocationViewController.swift */,
 			);
 			path = "swift-socket-example";
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7AD25861B22FFB900445CF2 /* GetLocationViewController.swift in Sources */,
 				5244C3791A47C059000A0C43 /* ViewController.swift in Sources */,
 				5238F6B61A495FAF0000A0CA /* MyUtils.swift in Sources */,
 				5244C3771A47C059000A0C43 /* AppDelegate.swift in Sources */,

@@ -27,8 +27,8 @@ class MessageCell: UITableViewCell {
     
     func setContent(message:MessageModel) {
         self.message = message
-        self.nameLabel.text = message.name
-        self.messageLabel.text = message.message
+        self.nameLabel.text = message.user_id.description
+        self.messageLabel.text = message.locate
     }
 
 }

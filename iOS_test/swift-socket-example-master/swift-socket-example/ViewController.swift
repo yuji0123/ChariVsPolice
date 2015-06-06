@@ -32,12 +32,12 @@ class ViewController: UIViewController, UITextViewDelegate {
         
         messages = []
         
-        SIOSocket.socketWithHost("ws://localhost:3000", response:  { (_socket: SIOSocket!) in
+        SIOSocket.socketWithHost("ws://192.168.100.75:3000", response:  { (_socket: SIOSocket!) in
             self.socket = _socket
             
             self.socket.onConnect = {() in
                 println("connected")
-                self.socket.emit("message init", args: [])
+                self.socket.emit("location init", args: [])
             }
             
             self.socket.onReconnect = { (attempts: Int) in
@@ -49,19 +49,19 @@ class ViewController: UIViewController, UITextViewDelegate {
             }
             
             // メッセージを受信
-            self.socket.on("message send", callback:{(data:[AnyObject]!)  in
+            self.socket.on("location send", callback:{(data:[AnyObject]!)  in
                 let dic = data[0] as! NSDictionary
-                let model = MessageModel(_name: dic["name"] as! String, _message: dic["message"] as! String)
+                let model = MessageModel(_user_id: dic["user_id"] as! NSInteger, _locate: dic["locate"] as! String)
                 self.messages?.append(model)
                 self.tableView.reloadData()
             })
             
             // メッセージの初期化
-            self.socket.on("message init", callback:{(data:[AnyObject]!)  in
+            self.socket.on("location init", callback:{(data:[AnyObject]!)  in
                 let arr = data[0] as! NSArray
                 for var i = 0; i < arr.count; i++ {
                     let dic = arr[i] as! NSDictionary
-                    let model = MessageModel(_name: dic["name"] as! String, _message: dic["message"] as! String)
+                    let model = MessageModel(_user_id: dic["user_id"] as! NSInteger, _locate: dic["locate"] as! String)
                     self.messages?.append(model)
                 }
                 self.tableView.reloadData()
@@ -210,8 +210,8 @@ class ViewController: UIViewController, UITextViewDelegate {
         let username = (MyUtils().stringHasContent(MyUtils().username)) ? MyUtils().username! : "Mr. Unknown"
         
         // ソケットにemitする
-        let model = NSDictionary(dictionary: ["name": username, "message": textView.text, "date": convertDateToStr(NSDate())]);
-        socket.emit("message send", args:[model] as! NSArray as [AnyObject])
+        let model = NSDictionary(dictionary: ["user_id": 1, "locate": "ときゅおう", "date": convertDateToStr(NSDate())]);
+        socket.emit("location send", args:[model] as NSArray as [AnyObject])
         
         // texiviewの高さを元に戻す
         textView.text = nil

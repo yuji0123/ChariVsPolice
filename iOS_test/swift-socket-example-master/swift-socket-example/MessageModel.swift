@@ -9,11 +9,11 @@
 import UIKit
 
 class MessageModel: NSObject {
-    let name:String
-    let message:String
+    let user_id:NSInteger
+    let locate:String
     
-    init(_name:String, _message:String) {
-        name = _name
-        message = _message
+    init(_user_id:NSInteger, _locate:String) {
+        user_id = _user_id
+        locate = _locate
     }
 }
